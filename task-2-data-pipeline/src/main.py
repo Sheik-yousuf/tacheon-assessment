@@ -1,7 +1,14 @@
+# ================================
+# FILE: main.py
+# PATH: task-2-data-pipeline/src/main.py
+# ================================
+
 from fetch_data import fetch_crypto_data
 from transform_data import transform_crypto_data
-import logging
+from load_bigquery import load_to_bigquery
 
+import logging
+import os
 
 logging.basicConfig(
     level=logging.INFO,
@@ -11,7 +18,10 @@ logging.basicConfig(
 
 def main():
 
-    # Step 1: Fetch raw data
+    # Create data directory automatically
+    os.makedirs("task-2-data-pipeline/data", exist_ok=True)
+
+    # Step 1: Fetch data
     raw_data = fetch_crypto_data()
 
     if raw_data:
@@ -25,13 +35,17 @@ def main():
 
             print(transformed_df.head())
 
-            # Step 3: Save transformed data locally
+            # Step 3: Save CSV locally
             output_path = "task-2-data-pipeline/data/crypto_market_data.csv"
 
             transformed_df.to_csv(output_path, index=False)
 
-            logging.info(f"Data saved successfully to {output_path}")
+            logging.info(f"CSV saved successfully to {output_path}")
+
+            # Step 4: Upload to BigQuery
+            load_to_bigquery(transformed_df)
 
 
 if __name__ == "__main__":
+
     main()

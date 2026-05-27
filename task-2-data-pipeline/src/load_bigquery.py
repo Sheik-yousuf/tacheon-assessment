@@ -1,8 +1,3 @@
-# ================================
-# FILE: load_bigquery.py
-# PATH: task-2-data-pipeline/src/load_bigquery.py
-# ================================
-
 from google.cloud import bigquery
 import logging
 
@@ -18,10 +13,12 @@ def load_to_bigquery(dataframe):
 
         logging.info("Connecting to BigQuery...")
 
-        client = bigquery.Client()
+        # Explicitly pass project ID
+        client = bigquery.Client(
+            project="crypto-pipeline-project28003"
+        )
 
-        # REPLACE THIS WITH YOUR PROJECT ID
-        table_id = "YOUR_PROJECT_ID.crypto_pipeline.crypto_market_data"
+        table_id = "crypto-pipeline-project28003.crypto_pipeline.crypto_market_data"
 
         job_config = bigquery.LoadJobConfig(
             write_disposition="WRITE_TRUNCATE"

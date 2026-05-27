@@ -1,7 +1,4 @@
--- ================================
--- FILE: summary_query.sql
--- PATH: task-2-data-pipeline/sql/summary_query.sql
--- ================================
+
 
 SELECT
     trend,

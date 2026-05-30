@@ -1,59 +1,114 @@
-# fetch-data
-CoinGecko API
-      ↓
-fetch_data.py
-      ↓
-raw JSON data
-
-
-Raw API Data
-        ↓
-Cleaned DataFrame
-        ↓
-Derived Insights
-
 # Cryptocurrency Data Pipeline
 
 ## Project Overview
 
-This project is a small ETL-style data pipeline built using Python and the CoinGecko public API.
+This project demonstrates a simple ETL (Extract, Transform, Load) pipeline using Python and the CoinGecko API.
 
-The main goal of the project is to automate the process of collecting external data, transforming it into a cleaner analytical format, and preparing it for storage and reporting.
-
-The pipeline was designed as part of the Tacheon Data & AI Product Engineer assessment.
+The objective is to automate data collection, transformation, and storage so that external data can be analyzed efficiently.
 
 ---
 
-# Why I Chose CoinGecko API
+# Architecture
+
+CoinGecko API
+↓
+fetch_data.py
+↓
+transform_data.py
+↓
+main.py
+↓
+CSV Export
+↓
+BigQuery
+↓
+SQL Analysis
+
+---
+
+# Why CoinGecko?
 
 I selected the CoinGecko API because:
 
-- it provides structured real-time market data
-- it does not require an API key
-- the JSON response is suitable for transformation and analysis
-- cryptocurrency data allows interesting analytical fields to be derived easily
-
-The API returns information such as:
-
-- cryptocurrency name
-- market cap
-- price
-- trading volume
-- 24-hour price change
+- No API key required
+- Structured JSON responses
+- Reliable cryptocurrency market data
+- Suitable for transformation and analytics
 
 ---
 
-# Current Pipeline Flow
-CoinGecko API
-      ↓
-fetch_data.py
-      ↓
-transform_data.py
-      ↓
-main.py
-      ↓
-CSV Output
-      ↓
-BigQuery
-      ↓
-SQL Analysis
+# Technologies Used
+
+- Python
+- Requests
+- Pandas
+- Google BigQuery
+- SQL
+
+---
+
+# Pipeline Components
+
+## 1. Data Extraction
+
+Data is fetched from the CoinGecko API using the Requests library.
+
+Features:
+
+- Error handling
+- Timeout configuration
+- Logging
+
+---
+
+## 2. Data Transformation
+
+Raw JSON data is transformed into a Pandas DataFrame.
+
+Operations include:
+
+- Field selection
+- Data cleaning
+- Null handling
+- Analytical enrichment
+
+---
+
+## 3. Derived Field
+
+A custom field called `trend` was created.
+
+Logic:
+
+- Bullish → Price change > 5%
+- Bearish → Price change < -5%
+- Stable → Between -5% and 5%
+- Unknown → Missing values
+
+This provides additional analytical value beyond the raw API response.
+
+---
+
+## 4. Data Storage
+
+The transformed data is:
+
+- Exported as CSV
+- Loaded into Google BigQuery
+
+Dataset:
+
+crypto_pipeline
+
+Table:
+
+crypto_market_data
+
+---
+
+# Running the Pipeline
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt

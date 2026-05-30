@@ -44,8 +44,6 @@ The API returns information such as:
 ---
 
 # Current Pipeline Flow
-
-```txt
 CoinGecko API
       ↓
 fetch_data.py
@@ -55,3 +53,7 @@ transform_data.py
 main.py
       ↓
 CSV Output
+      ↓
+BigQuery
+      ↓
+SQL Analysis

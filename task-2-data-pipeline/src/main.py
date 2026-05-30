@@ -1,8 +1,3 @@
-# ================================
-# FILE: main.py
-# PATH: task-2-data-pipeline/src/main.py
-# ================================
-
 from fetch_data import fetch_crypto_data
 from transform_data import transform_crypto_data
 from load_bigquery import load_to_bigquery
